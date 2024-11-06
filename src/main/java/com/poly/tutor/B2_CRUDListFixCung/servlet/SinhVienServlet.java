@@ -7,6 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.SneakyThrows;
+import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -70,19 +72,46 @@ public class SinhVienServlet extends HttpServlet {
     private void updateSinhVien(HttpServletRequest request, HttpServletResponse response) {
     }
 
-    private void addSinhVien(HttpServletRequest request, HttpServletResponse response) {
+    @SneakyThrows
+    private void addSinhVien(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // B1: Tao ra 1 doi tuong
+        // beanutil => dat nam input trung name thuoc tinh entity
+        SinhVien sv = new SinhVien();
+        // B2: Mapping toan bo cac thuoc tinh cho doi tuong sv
+        BeanUtils.populate(sv,request.getParameterMap());
+        // B3: goi ham add
+        repository.addSinhVien(sv);
+        // B4: Quay ve trang chu
+        response.sendRedirect("/sinh-vien/hien-thi");
     }
 
-    private void viewAdd(HttpServletRequest request, HttpServletResponse response) {
+    private void viewAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // chuyen trang
+        request.getRequestDispatcher("/view/buoi2/add-sinh-vien.jsp").forward(request,response);
     }
 
-    private void viewUpdate(HttpServletRequest request, HttpServletResponse response) {
+    private void viewUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String maSV = request.getParameter("id1");
+        SinhVien sv = repository.detailSinhVien(maSV);
+        request.setAttribute("sv1",sv);
+        request.getRequestDispatcher("/view/buoi2/update-sinh-vien.jsp").forward(request,response);
     }
 
-    private void detailSinhVien(HttpServletRequest request, HttpServletResponse response) {
+    private void detailSinhVien(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String maSV = request.getParameter("a");
+        SinhVien sv = repository.detailSinhVien(maSV);
+        request.setAttribute("sv1",sv);
+        request.getRequestDispatcher("/view/buoi2/detail-sinh-vien.jsp").forward(request,response);
     }
 
-    private void xoaSinhVien(HttpServletRequest request, HttpServletResponse response) {
+    private void xoaSinhVien(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // B1: Lay ra cai id ma muon xoa
+        // (Lay gia tri tu jsp -> servlet): getParameter
+        String maSV = request.getParameter("id2");
+        // B2: Goi ham ben repo
+        repository.removeSinhVien(maSV);
+        // B3: Quay lai trang chu
+        response.sendRedirect("/sinh-vien/hien-thi");
     }
 
     private void searchSinhVien(HttpServletRequest request, HttpServletResponse response) {
