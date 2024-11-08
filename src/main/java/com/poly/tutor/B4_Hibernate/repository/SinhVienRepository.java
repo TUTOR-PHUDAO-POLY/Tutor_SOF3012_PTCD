@@ -70,6 +70,8 @@ public class SinhVienRepository {
     }
 
     public static void main(String[] args) {
-        System.out.println(new SinhVienRepository().getOne(1));
+        System.out.println(new SinhVienRepository().getAll());
+
+//        System.out.println(new SinhVienRepository().getOne(1));
     }
 }
