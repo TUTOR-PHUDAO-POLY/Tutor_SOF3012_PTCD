@@ -16,6 +16,7 @@
     2. method: post
     3. type button: submit => TRUYỀN ĐƯỢC DỮ LIỆU ĐI
 --%>
+<p>${mes1}</p>
 <form action="/ket-qua" method="post">
     <label>Username:</label>
     <input type="text" name="user">

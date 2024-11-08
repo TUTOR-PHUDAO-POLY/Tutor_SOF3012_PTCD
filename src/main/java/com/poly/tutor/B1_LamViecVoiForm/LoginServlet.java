@@ -38,8 +38,13 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // /login -> hien thi giao dien nhu hinh
         // CHUYEN SANG TRANG MOI
+        String mess = "SOF3012 - Lap trinh Java 4";
+        request.setAttribute("mes1", mess);
         // C1: request.getRequestDispatcher
         request.getRequestDispatcher("form-login1.jsp").forward(request, response);
+        // C2:response.sendReidrect
+//        // => CHUYEN TRANG THOI ( KHONG MANG THEO GIA TRI DI)
+//        response.sendRedirect("/form-login1.jsp");
     }
 
     @Override
@@ -55,8 +60,8 @@ public class LoginServlet extends HttpServlet {
         // request.setAttribute
         int number = 5;
         // number : ten bien do cac ban dat <=> a
-        request.setAttribute("a",name);
-        request.setAttribute("b1",pass);
+        request.setAttribute("a", name);
+        request.setAttribute("b1", pass);
         // B3: Chuyen trang
         request.getRequestDispatcher("ket-qua-login.jsp").forward(request, response);
     }

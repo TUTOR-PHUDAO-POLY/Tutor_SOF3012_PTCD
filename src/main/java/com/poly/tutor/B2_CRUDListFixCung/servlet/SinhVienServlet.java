@@ -104,7 +104,7 @@ public class SinhVienServlet extends HttpServlet {
         request.getRequestDispatcher("/view/buoi2/detail-sinh-vien.jsp").forward(request,response);
     }
 
-    private void xoaSinhVien(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void xoaSinhVien(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // B1: Lay ra cai id ma muon xoa
         // (Lay gia tri tu jsp -> servlet): getParameter
         String maSV = request.getParameter("id2");
@@ -112,6 +112,9 @@ public class SinhVienServlet extends HttpServlet {
         repository.removeSinhVien(maSV);
         // B3: Quay lai trang chu
         response.sendRedirect("/sinh-vien/hien-thi");
+//        List<SinhVien> listSinhVien = repository.getListSinhVien();
+//        request.setAttribute("a1", listSinhVien);
+//        request.getRequestDispatcher("/view/buoi2/sinhviens.jsp").forward(request, response);
     }
 
     private void searchSinhVien(HttpServletRequest request, HttpServletResponse response) {
